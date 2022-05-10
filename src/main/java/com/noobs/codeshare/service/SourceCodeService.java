@@ -8,9 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.security.Timestamp;
-import java.util.ArrayList;
-
 import com.noobs.codeshare.DateProcessing;
 import com.noobs.codeshare.dao.SourceCodeDAO;
 

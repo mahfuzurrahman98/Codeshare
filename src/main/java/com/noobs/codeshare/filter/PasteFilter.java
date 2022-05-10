@@ -1,8 +1,10 @@
 package com.noobs.codeshare.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.noobs.codeshare.dao.SourceCodeDAO;
+import com.noobs.codeshare.model.SourceCode;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -18,6 +20,8 @@ import jakarta.servlet.http.HttpSession;
 @WebFilter("/paste")
 public class PasteFilter extends HttpFilter {
 
+	private static final long serialVersionUID = 1L;
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
@@ -25,25 +29,33 @@ public class PasteFilter extends HttpFilter {
 		HttpServletResponse _response = (HttpServletResponse) response;
 		SourceCodeDAO source_code_dao = new SourceCodeDAO();
 		HttpSession session = _request.getSession();
-		
-		int cur_user_id = (int) session.getAttribute("id");
-		
-		int id = Integer.parseInt(_request.getParameter("i"));
-		int visibility = source_code_dao.getVisibility(id);
 
-		if (visibility == 1) { // public
-			chain.doFilter(request, response); // go
-		} else if (visibility == 2) { // protected
-			if (1) {
+		int id = Integer.parseInt(_request.getParameter("i"));
+		SourceCode source_code_details = source_code_dao.getDetailsByID(id);
+
+		if (session.getAttribute("id") != null) { // all access
+			if (source_code_details.getVisibility() == 1) { // public
+				System.out.println("public");
 				chain.doFilter(request, response); // go
-			}else {
-				_response.sendRedirect("home");
+			} else if (source_code_details.getVisibility() == 2) { // protected
+				if (Arrays.asList(source_code_details.getShared_persons()).contains((int) session.getAttribute("id"))) {
+					System.out.println("protected");
+					chain.doFilter(request, response); // go
+				} else {
+					_response.sendRedirect("home");
+				}
+			} else { // private
+				if (source_code_details.getCreated_by() == (int) session.getAttribute("id")) {
+					System.out.println("private");
+					chain.doFilter(request, response); // go
+				} else {
+					_response.sendRedirect("home");
+				}
 			}
-		} else { // private
-			if (1) {
+		} else { // only public access
+			if (source_code_details.getVisibility() == 1) { // public
+				System.out.println("public");
 				chain.doFilter(request, response); // go
-			}else {
-				_response.sendRedirect("home");
 			}
 		}
 	}

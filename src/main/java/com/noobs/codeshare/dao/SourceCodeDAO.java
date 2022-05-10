@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Arrays;
 
-import com.noobs.codeshare.model.User;
+import com.noobs.codeshare.model.SourceCode;
 import com.noobs.codeshare.service.DBConnection;
-import com.noobs.codeshare.dao.SharedWithDAO;
 
 public class SourceCodeDAO {
 	private Connection conn = null;
@@ -56,21 +56,26 @@ public class SourceCodeDAO {
 		}
 	}
 
-	public int getVisibility(int id) throws IOException {
-		int visibility = -1;
-		String sql = "select visibility from Source_Codes where Id = ?";
+	public SourceCode getDetailsByID(int id) throws IOException {
+		SourceCode details = null;
+		String sql = "SELECT Source_Codes.*, Users.Name AS CreatedByName, Languages.Name AS Language, GROUP_CONCAT(Shared_With.Shared_User_Id) AS Shared_Persons FROM Source_Codes JOIN Languages ON Source_Codes.LanguageId = Languages.Id LEFT JOIN Users ON Source_Codes.CreatedBy = Users.Id LEFT JOIN Shared_With ON Source_Codes.Id = Shared_With.Source_Id WHERE Source_Codes.Id = ? GROUP BY Source_Codes.Id";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, id);
 
 			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				visibility =  rs.getInt("Visibility");
-			}
+			rs.next();
+
+			details = new SourceCode(rs.getInt("Id"), rs.getString("Language"), rs.getString("Code"),
+					rs.getInt("Visibility"), rs.getInt("createdBy"), rs.getString("createdByName"),
+					rs.getString("createdByAlt"),
+					Arrays.stream(rs.getString("Shared_Persons").split(",")).mapToInt(Integer::parseInt).toArray(),
+					rs.getString("CreatedAt"), rs.getString("ExpireAt"), rs.getInt("IsDeleted"));
+
 		} catch (SQLException e) {
 			System.out.println("DAO Error at source code");
 			e.printStackTrace();
 		}
-		return visibility;
+		return details;
 	}
 }
