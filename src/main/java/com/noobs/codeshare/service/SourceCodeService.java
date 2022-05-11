@@ -47,7 +47,7 @@ public class SourceCodeService extends HttpServlet {
 			share_with = request.getParameterValues("share_with");
 			visibility = Integer.parseInt(request.getParameter("visibility"));
 		}
-		//source_code_dao.addSourceCode(language, visibility, source, poster, poster_name, curTimestamp.toString(),
-				//expTimestamp, 0, share_with);
+		source_code_dao.addSourceCode(language, visibility, source, poster, poster_name, curTimestamp.toString(),
+				expTimestamp, 0, share_with);
 	}
 }

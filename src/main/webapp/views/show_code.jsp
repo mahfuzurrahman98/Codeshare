@@ -5,7 +5,7 @@
 <%@page import="com.noobs.codeshare.model.SourceCode"%>
 
 <%
-SourceCode details = (SourceCode) request.getAttribute("detials");
+SourceCode details = (SourceCode) request.getAttribute("details");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,35 +17,12 @@ SourceCode details = (SourceCode) request.getAttribute("detials");
 </head>
 
 <body>
-	<div class="container-fluid">
-		<textarea rows="50" cols="" readonly="readonly">
-			<%=details.getSource_code()%>
-		</textarea>
+	<div class="container-fluid px-lg-5 py-2">
+		<textarea class="form-control" rows="30" cols="" readonly="readonly"><%=details.getSource_code()%></textarea>
 	</div>
 </body>
 
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 <script src="./assets/js/jquery-3.6.0.min.js"></script>
 
-<script>
-	$("#login_form").submit(function(e) {
-		e.preventDefault();
-		$("#submit_btn").prop("disabled", true);
-		$.ajax({
-			type : $(this).attr('method'),
-			url : $(this).attr('action'),
-			data : $(this).serialize(),
-			cache : false,
-			timeout : 800000,
-			success : function(data) {
-				let res = JSON.parse(data);
-				if (res.login) {
-					window.location.reload();
-				}
-			},
-			error : function(e) {
-			}
-		});
-	});
-</script>
 </html>

@@ -27,6 +27,7 @@ public class LoginRegistrationFilter extends HttpFilter {
 			_response.sendRedirect("home");
 		} else { // not logged in
 			chain.doFilter(request, response); // go
+			System.out.println("passed!");
 		}
 	}
 }

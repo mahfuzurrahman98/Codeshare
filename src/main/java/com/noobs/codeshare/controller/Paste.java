@@ -17,18 +17,31 @@ import com.noobs.codeshare.model.SourceCode;
 public class Paste extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("in paste controller");
 		SourceCodeDAO source_code_dao = new SourceCodeDAO();
 		HttpSession session = request.getSession();
 
-		int cur_user_id = (int) session.getAttribute("id");
-		int id = Integer.parseInt(request.getParameter("i"));
-		SourceCode source_code_details = source_code_dao.getDetailsByID(id);
-		
-		request.setAttribute("details", source_code_details);
-		RequestDispatcher rd = request.getRequestDispatcher("views/show_code.jsp");
-		rd.forward(request, response);
+		try {
+			if (request.getParameterMap().containsKey("i")) {
+				int id = Integer.parseInt(request.getParameter("i"));
+				SourceCode source_code_details = source_code_dao.getDetailsByID(id);
+
+				request.setAttribute("details", source_code_details);
+				RequestDispatcher rd = request.getRequestDispatcher("views/show_code.jsp");
+				rd.forward(request, response);
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
