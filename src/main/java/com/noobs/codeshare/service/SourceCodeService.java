@@ -21,6 +21,7 @@ public class SourceCodeService extends HttpServlet {
 		HttpSession session = request.getSession();
 		SourceCodeDAO source_code_dao = new SourceCodeDAO();
 		if (request.getParameterMap().containsKey("add")) {
+			System.out.println("here in add.....");
 			String title = request.getParameter("title");
 			int language = Integer.parseInt(request.getParameter("language"));
 			int poster = Integer.parseInt(request.getParameter("poster"));
@@ -49,9 +50,9 @@ public class SourceCodeService extends HttpServlet {
 				visibility = Integer.parseInt(request.getParameter("visibility"));
 			}
 			source_code_dao.addSourceCode(title, language, visibility, source, poster, poster_name,
-					curTimestamp.toString(), expTimestamp, 0, share_with);
+					curTimestamp.toString(), expTimestamp, 1, share_with);
 		}
-		
+
 		if (request.getParameterMap().containsKey("change_status")) {
 			System.out.println("here.....");
 			int id = Integer.parseInt(request.getParameter("id"));

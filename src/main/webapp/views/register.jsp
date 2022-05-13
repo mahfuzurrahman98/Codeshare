@@ -5,42 +5,62 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Register-Noobs Codeshare</title>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+<title>Register - Noobs Codeshare</title>
+<link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="./assets/css/bootstrap-multiselect.min.css" rel="stylesheet">
+<link href="./assets/fontawsome/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
-	<form action="LoginService" method="post">
-		<div class="mb-3">
-			<label for="name" class="form-label">Name</label> <input
-				type="text" class="form-control" id="name" name="name"
-				required>
+	<jsp:include page="./header.jsp" />
+	<div class="reg_page mx-lg-5 mb-5">
+		<h1 class="text-success text-center mt-5">
+			<b>Get Registered</b>
+		</h1>
+		<h6 class="text-muted text-center mb-4">Sign up with your details</h6>
+		<div class="mb-5 px-3 px-lg-5 py-5 mx-lg-5 shadow-lg bg-white rounded">
+			<form class="px-lg-3" action="" method="POST">
+				<div class="form-group text-success h5">
+					<label><b>Full Name</b></label> <input type="text" name="name"
+						class="form-control form-control-sm" pattern="[A-Z a-z]+" title="Only alphabets"
+						placeholder="Enter Your Full Name" required="">
+				</div>
+				<div class="form-group text-success h5">
+					<label><b>Email Address</b></label> <input type="email"
+						name="email" class="form-control form-control-sm" placeholder="Enter Your Email"
+						required="">
+				</div>
+				<div class="form-group text-success h5">
+					<label><b>Enter a Username</b></label> <input type="text"
+						name="username" class="form-control form-control-sm" pattern="[A-Za-z_0-9]+"
+						title="Only alphanumeric and underscore are allowed"
+						placeholder="*Required when login" required="">
+				</div>
+				<div class="form-group text-success h5">
+					<label><b>Enter a Password</b></label> <input type="password"
+						name="pwd1" class="form-control form-control-sm"
+						placeholder="*Required when login" required="">
+				</div>
+				<div class="form-group text-success h5">
+					<label><b>Re enter the password</b></label> <input type="password"
+						name="pwd2" class="form-control form-control-sm"
+						placeholder="*Required when login" required="">
+				</div>
+				<div
+					class="reg_btn mt-4 justify-content-center justify-content-lg-start">
+					<button type="submit" name="signup" class="btn btn-success">
+						<b>Sign Up</b>
+					</button>
+				</div>
+			</form>
 		</div>
-		<div class="mb-3">
-			<label for="username" class="form-label">Username</label> <input
-				type="text" class="form-control" id="username" name="username"
-				required>
-		</div>
-		<div class="mb-3">
-			<label for="email" class="form-label">Email</label> <input
-				type="email" class="form-control" id="email" name="email"
-				required>
-		</div>
-		<div class="mb-3">
-			<label for="password1" class="form-label">Password</label> <input
-				type="password" class="form-control" id="password1" name="password1"
-				required>
-		</div>
-		<div class="mb-3">
-			<label for="password2" class="form-label">Re Enter Password</label> <input
-				type="password" class="form-control" id="password2" name="password2"
-				required>
-		</div>
-		<input type="submit" class="btn btn-primary" value="Register" />
-	</form>
+	</div>
+	<jsp:include page="./footer.jsp" />
 </body>
 
-<script src="../assets/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/jquery-3.6.0.min.js"></script>
+<script src="./assets/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/js/jquery-3.6.0.min.js"></script>
+<script src="./assets/js/bootstrap-multiselect.min.js"></script>
+<script src="./assets/fontawsome/js/all.min.js"></script>
 
 </html>

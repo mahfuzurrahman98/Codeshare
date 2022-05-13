@@ -77,21 +77,21 @@ if (cur_session.getAttribute("username") == null) {
 				<form id="login_form" action="LoginService" method="post">
 					<div class="mb-3">
 						<label for="username" class="form-label">Username</label> <input
-							type="text" class="form-control" id="username" name="username"
+							type="text" class="form-control form-control-sm" id="username" name="username"
 							required>
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Password</label> <input
-							type="password" class="form-control" id="password"
+							type="password" class="form-control form-control-sm" id="password"
 							name="password" required>
 					</div>
 					<div class="float-end">
-						<input type="submit" class="btn btn-primary" id="submit_btn"
+						<input type="submit" class="btn btn-primary"
 							value="Login" />
 					</div>
 				</form>
 			</div>
-			<div class="modal-footer">
+			<div class="_modal-footer d-none px-2">
 				<div class="alert alert-sm alert_msg" role="alert"></div>
 			</div>
 		</div>

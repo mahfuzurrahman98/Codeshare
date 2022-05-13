@@ -27,15 +27,17 @@ int cur_user = (int) request.getAttribute("cur_user");
 
 		<form id="paste_form" action="SourceCodeService" method="post"
 			class="row">
-			<input type="hidden" name="add" value="1"/>
-			<div class="col">
-			<label for="title" class="form-label">Title</label>
-			<input type="text" class="form-control" name="title" id="title" />
+			<input type="hidden" name="add" value="1" />
+			<div class="col-12 col-md-6 col-lg-3 mt-2 mt-sm-0">
+				<label for="title" class="form-label text-success">Title</label> <input
+					type="text" class="form-control form-control-sm" name="title"
+					id="title" placeholder="Enter a title" />
 			</div>
 			<div
-				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-4" : "col-lg-3"%>">
-				<label for="language" class="form-label">Language</label> <select
-					class="form-control" id="language" name="language" required>
+				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-3" : "col-lg-2"%> mt-2 mt-sm-0">
+				<label for="language" class="form-label text-success">Language</label> <select
+					class="form-control form-control-sm" id="language" name="language"
+					onchange="changeLanguage()" required>
 					<option value="">Select Language</option>
 					<%
 					for (Language lang : languages) {
@@ -50,16 +52,17 @@ int cur_user = (int) request.getAttribute("cur_user");
 			</div>
 			<input type="hidden" name="poster" id="poster" value="<%=cur_user%>" />
 			<div
-				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-4" : "col-lg-3"%>">
-				<label for="poster_name" class="form-label">Poster</label> <input
-					type="text" class="form-control" id="poster_name"
+				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-4" : "col-lg-3"%> mt-2 mt-sm-0">
+				<label for="poster_name" class="form-label text-success">Poster</label> <input
+					type="text" class="form-control form-control-sm" id="poster_name"
 					name="poster_name" value="<%=cur_user == 0 ? "" : poster_name%>"
-					<%=cur_user > 0 ? "readonly='readonly'" : "required"%>>
+					<%=cur_user > 0 ? "readonly='readonly'" : "required"%> placeholder="Enter your name">
 			</div>
 			<div
-				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-4" : "col-lg-3"%>">
-				<label for="language" class="form-label">Expire</label> <select
-					class="form-control" id="expire" name="expire" required>
+				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-2" : "col-lg-2"%> mt-2 mt-sm-0">
+				<label for="language" class="form-label text-success">Expire</label> <select
+					class="form-control form-control-sm" id="expire" name="expire"
+					required>
 					<option value="">Select Expire</option>
 					<option value="1">1 Hour</option>
 					<option value="2">1 Day</option>
@@ -72,19 +75,20 @@ int cur_user = (int) request.getAttribute("cur_user");
 			if (cur_user > 0) {
 				ArrayList<User> users = (ArrayList<User>) request.getAttribute("share_users");
 			%>
-			<div class="col-12 col-md-6 col-lg-3">
-				<label for="visibility" class="form-label">Visibility</label> <select
-					class="form-control" id="visibility" name="visibility" required>
+			<div class="col-12 col-md-6 col-lg-2 mt-2 mt-sm-0">
+				<label for="visibility" class="form-label text-success">Visibility</label> <select
+					class="form-control form-control-sm" id="visibility"
+					name="visibility" required>
 					<option value="">Select Visibility</option>
 					<option value="1">Public</option>
 					<option value="2">Private</option>
 					<option value="3">Protected</option>
 				</select>
 			</div>
-			<div id="share_with_div" class="col-12 d-none">
-				<label for="share_with" class="form-label">Share With</label> <select
-					class="form-control selectpicker" id="share_with" name="share_with"
-					multiple>
+			<div id="share_with_div" class="col-12 d-none mt-2">
+				<label for="share_with" class="form-label text-success">Share With</label> <select
+					class="form-control form-control-sm selectpicker" id="share_with"
+					name="share_with" multiple>
 					<%
 					for (User user : users) {
 					%>
@@ -99,11 +103,11 @@ int cur_user = (int) request.getAttribute("cur_user");
 			<%
 			}
 			%>
-			<div class="">
-				<label for="source">Source Code</label>
-				<textarea class="form-control" id="source" name="source" required></textarea>
+			<div class="mt-2">
+				<label for="source" class="form-label text-success">Source Code</label>
+				<div id="editor" style="height: 75vh; max-height: 100vh;"></div>
 			</div>
-			<div class="col-12 col-md-6 col-lg-3">
+			<div class="col-12 col-md-6 col-lg-3 mt-2">
 				<button id="submit_btn" type="submit" class="btn btn-success">Paste</button>
 			</div>
 		</form>
@@ -116,6 +120,9 @@ int cur_user = (int) request.getAttribute("cur_user");
 <script src="./assets/js/jquery-3.6.0.min.js"></script>
 <script src="./assets/js/bootstrap-multiselect.min.js"></script>
 <script src="./assets/fontawsome/js/all.min.js"></script>
+<script src="./assets/ace/ace.js"></script>
+<script src="./assets/ace/ext-language_tools.js"></script>
+<script src="./assets/js/editor.js"></script>
 
 <script>
 	$("#visibility").change(function() {
@@ -133,16 +140,22 @@ int cur_user = (int) request.getAttribute("cur_user");
 
 		if ($("#visibility").val() == 3 && $("#share_with").val() == "") {
 			alert("Select at least one person!");
+		} else if (editor.getSession().getValue().trim() == "") {
+			alert("Source code can't be empty")
 		} else {
-			console.log($(this).serialize());
+			var form_data = $(this).serialize();
+			form_data += "&source=" + editor.getSession().getValue();
+			console.log(form_data);
 			$.ajax({
 				type : $(this).attr('method'),
 				url : $(this).attr('action'),
-				data : $(this).serialize(),
+				data : form_data,
 				cache : false,
 				timeout : 800000,
 				success : function(data) {
-
+					$("#paste_form")[0].reset();
+					editor.getSession().setValue("");
+					alert("Source pasted successfully");
 				},
 				error : function(e) {
 				}
@@ -152,7 +165,7 @@ int cur_user = (int) request.getAttribute("cur_user");
 
 	$("#login_form").submit(function(e) {
 		e.preventDefault();
-		//$("#submit_btn").prop("disabled", true);
+		// $("#submit_btn").prop("disabled", true);
 		$.ajax({
 			type : $(this).attr('method'),
 			url : $(this).attr('action'),
@@ -160,8 +173,8 @@ int cur_user = (int) request.getAttribute("cur_user");
 			cache : false,
 			timeout : 800000,
 			success : function(data) {
+				$("._modal-footer").removeClass("d-none");
 				let res = JSON.parse(data);
-				console.log(res)
 				if (res.login) {
 					$(".alert_msg").removeClass("alert-danger");
 					$(".alert_msg").addClass("alert-success");

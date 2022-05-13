@@ -14,7 +14,7 @@ ArrayList<SourceCode> library = (ArrayList<SourceCode>) request.getAttribute("li
 
 <head>
 <meta charset="UTF-8">
-<title>Home-Noobs Codeshare</title>
+<title>Library - Noobs Codeshare</title>
 <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="./assets/css/bootstrap-multiselect.min.css" rel="stylesheet">
 <link href="./assets/fontawsome/css/all.min.css" rel="stylesheet">

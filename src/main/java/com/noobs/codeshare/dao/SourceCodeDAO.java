@@ -38,7 +38,8 @@ public class SourceCodeDAO {
 				stmt.setNull(8, Types.NULL);
 			}
 			stmt.setInt(9, status);
-//			int res = stmt.executeUpdate();
+			int res = stmt.executeUpdate();
+			System.out.println("res: " + res);
 
 			if (visibility == 3) {
 				SharedWithDAO shared_with_dao = new SharedWithDAO();
@@ -51,6 +52,7 @@ public class SourceCodeDAO {
 					}
 				}
 			}
+			System.out.println("inserted...");
 		} catch (SQLException e) {
 			System.out.println("DAO Error at source code");
 			e.printStackTrace();
