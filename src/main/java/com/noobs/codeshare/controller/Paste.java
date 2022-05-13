@@ -6,8 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 
 import com.noobs.codeshare.dao.SourceCodeDAO;
@@ -21,15 +19,13 @@ public class Paste extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("in paste controller");
 		SourceCodeDAO source_code_dao = new SourceCodeDAO();
-		HttpSession session = request.getSession();
-
 		try {
 			if (request.getParameterMap().containsKey("i")) {
 				int id = Integer.parseInt(request.getParameter("i"));
 				SourceCode source_code_details = source_code_dao.getDetailsByID(id);
 
 				request.setAttribute("details", source_code_details);
-				RequestDispatcher rd = request.getRequestDispatcher("views/show_code.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("views/show_source.jsp");
 				rd.forward(request, response);
 			}
 		} catch (NumberFormatException e) {

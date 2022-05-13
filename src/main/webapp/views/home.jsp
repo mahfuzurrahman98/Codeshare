@@ -18,12 +18,20 @@ int cur_user = (int) request.getAttribute("cur_user");
 <title>Home-Noobs Codeshare</title>
 <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="./assets/css/bootstrap-multiselect.min.css" rel="stylesheet">
+<link href="./assets/fontawsome/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
-	<div class="container-fluid ">
+	<jsp:include page="./header.jsp" />
+	<div class="main container-fluid">
+
 		<form id="paste_form" action="SourceCodeService" method="post"
 			class="row">
+			<input type="hidden" name="add" value="1"/>
+			<div class="col">
+			<label for="title" class="form-label">Title</label>
+			<input type="text" class="form-control" name="title" id="title" />
+			</div>
 			<div
 				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-4" : "col-lg-3"%>">
 				<label for="language" class="form-label">Language</label> <select
@@ -100,11 +108,14 @@ int cur_user = (int) request.getAttribute("cur_user");
 			</div>
 		</form>
 	</div>
+	<jsp:include page="./footer.jsp" />
+
 </body>
 
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 <script src="./assets/js/jquery-3.6.0.min.js"></script>
 <script src="./assets/js/bootstrap-multiselect.min.js"></script>
+<script src="./assets/fontawsome/js/all.min.js"></script>
 
 <script>
 	$("#visibility").change(function() {
@@ -137,6 +148,36 @@ int cur_user = (int) request.getAttribute("cur_user");
 				}
 			});
 		}
+	});
+
+	$("#login_form").submit(function(e) {
+		e.preventDefault();
+		//$("#submit_btn").prop("disabled", true);
+		$.ajax({
+			type : $(this).attr('method'),
+			url : $(this).attr('action'),
+			data : $(this).serialize(),
+			cache : false,
+			timeout : 800000,
+			success : function(data) {
+				let res = JSON.parse(data);
+				console.log(res)
+				if (res.login) {
+					$(".alert_msg").removeClass("alert-danger");
+					$(".alert_msg").addClass("alert-success");
+					$(".alert_msg").text("Login Successful");
+					setTimeout(function() {
+						window.location.reload();
+					}, 1000);
+
+				} else {
+					$(".alert_msg").addClass("alert-danger");
+					$(".alert_msg").text("Invalid Credintials");
+				}
+			},
+			error : function(e) {
+			}
+		});
 	});
 </script>
 

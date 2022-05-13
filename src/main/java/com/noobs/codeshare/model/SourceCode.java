@@ -3,6 +3,7 @@ package com.noobs.codeshare.model;
 public class SourceCode {
 
 	private int Id;
+	private String title;
 	private String language;
 	private String source_code;
 	private int visibility;
@@ -12,13 +13,14 @@ public class SourceCode {
 	private int[] shared_persons;
 	private String created_at;
 	private String expire_at;
-	private int is_deleted;
-	
-	public SourceCode(int id, String language, String source_code, int visibility, int created_by,
+	private int status;
+
+	public SourceCode(int id, String title, String language, String source_code, int visibility, int created_by,
 			String created_by_name, String created_by_alt, int[] shared_persons, String created_at, String expire_at,
-			int is_deleted) {
+			int status) {
 		super();
 		Id = id;
+		this.title = title;
 		this.language = language;
 		this.source_code = source_code;
 		this.visibility = visibility;
@@ -28,7 +30,7 @@ public class SourceCode {
 		this.shared_persons = shared_persons;
 		this.created_at = created_at;
 		this.expire_at = expire_at;
-		this.is_deleted = is_deleted;
+		this.status = status;
 	}
 
 	public int getId() {
@@ -45,6 +47,14 @@ public class SourceCode {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getSource_code() {
@@ -111,11 +121,12 @@ public class SourceCode {
 		this.expire_at = expire_at;
 	}
 
-	public int getIs_deleted() {
-		return is_deleted;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setIs_deleted(int is_deleted) {
-		this.is_deleted = is_deleted;
+	public void setStatus(int status) {
+		this.status = status;
 	}
+
 }

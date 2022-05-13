@@ -14,27 +14,18 @@ import java.util.ArrayList;
 import com.noobs.codeshare.dao.SourceCodeDAO;
 import com.noobs.codeshare.model.SourceCode;
 
-@WebServlet("/library")
-public class Library extends HttpServlet {
+@WebServlet("/shared")
+public class SharedCode extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		System.out.println("library controller");
 		HttpSession session = request.getSession();
 		SourceCodeDAO source_code_dao = new SourceCodeDAO();
-
-		int cur_user_id = (int) session.getAttribute("id");
-		ArrayList<SourceCode> library = source_code_dao.getLibraryByUser(cur_user_id);
-		System.out.println("Size_x: " + library.size());
-//		for (int i = 0; i < library.size(); i++) {
-//			System.out.println(library.get(i).getLanguage());
-//		}
-		request.setAttribute("library", library);
-
-		RequestDispatcher rd = request.getRequestDispatcher("views/library.jsp");
+		ArrayList<SourceCode> source_list = source_code_dao.getSharedSourceByUser((int) session.getAttribute("id"));
+		request.setAttribute("source_list", source_list);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("views/shared_sources.jsp");
 		rd.forward(request, response);
 	}
-
 }
