@@ -60,14 +60,12 @@ ArrayList<SourceCode> library = (ArrayList<SourceCode>) request.getAttribute("li
 	</div>
 	<jsp:include page="./footer.jsp" />
 
-</body>
+	<script src="./assets/js/bootstrap.bundle.min.js"></script>
+	<script src="./assets/js/jquery-3.6.0.min.js"></script>
+	<script src="./assets/js/bootstrap-multiselect.min.js"></script>
+	<script src="./assets/fontawsome/js/all.min.js"></script>
 
-<script src="./assets/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/js/jquery-3.6.0.min.js"></script>
-<script src="./assets/js/bootstrap-multiselect.min.js"></script>
-<script src="./assets/fontawsome/js/all.min.js"></script>
-
-<script>
+	<script>
 	function changeStatus(x) {
 		$.ajax({
 			type : "post",
@@ -88,4 +86,5 @@ ArrayList<SourceCode> library = (ArrayList<SourceCode>) request.getAttribute("li
 	}
 </script>
 
+</body>
 </html>

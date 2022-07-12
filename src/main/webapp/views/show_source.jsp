@@ -21,14 +21,15 @@ SourceCode details = (SourceCode) request.getAttribute("details");
 <body>
 	<jsp:include page="./header.jsp" />
 	<div class="container-fluid px-lg-5 py-2">
-		<textarea class="form-control form-control-sm" rows="30" cols="" readonly="readonly"><%=details.getSource_code()%></textarea>
+		<textarea class="form-control form-control-sm" rows="30" cols=""
+			readonly="readonly"><%=details.getSource_code()%></textarea>
 	</div>
 	<jsp:include page="./footer.jsp" />
+
+	<script src="./assets/js/bootstrap.bundle.min.js"></script>
+	<script src="./assets/js/jquery-3.6.0.min.js"></script>
+	<script src="./assets/js/bootstrap-multiselect.min.js"></script>
+	<script src="./assets/fontawsome/js/all.min.js"></script>
+
 </body>
-
-<script src="./assets/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/js/jquery-3.6.0.min.js"></script>
-<script src="./assets/js/bootstrap-multiselect.min.js"></script>
-<script src="./assets/fontawsome/js/all.min.js"></script>
-
 </html>

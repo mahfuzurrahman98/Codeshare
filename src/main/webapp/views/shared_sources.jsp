@@ -44,7 +44,7 @@ ArrayList<SourceCode> source_list = (ArrayList<SourceCode>) request.getAttribute
 					<td><%=source_list.get(i).getTitle()%></td>
 					<td><%=source_list.get(i).getLanguage()%></td>
 					<td><a href="./paste?i=<%=source_list.get(i).getId()%>">Link</a></td>
-					<td><%=source_list.get(i).getCreated_by_name() %></td>
+					<td><%=source_list.get(i).getCreated_by_name()%></td>
 				</tr>
 				<%
 				}
@@ -55,45 +55,44 @@ ArrayList<SourceCode> source_list = (ArrayList<SourceCode>) request.getAttribute
 	</div>
 	<jsp:include page="./footer.jsp" />
 
+	<script src="./assets/js/bootstrap.bundle.min.js"></script>
+	<script src="./assets/js/jquery-3.6.0.min.js"></script>
+	<script src="./assets/js/bootstrap-multiselect.min.js"></script>
+	<script src="./assets/fontawsome/js/all.min.js"></script>
+
+	<script>
+		$("#visibility").change(function() {
+			if ($("#visibility").val() == 3) { // protected
+				$("#share_with_div").removeClass("d-none");
+			} else {
+				$("#share_with_div").removeClass("d-block");
+				$("#share_with_div").addClass("d-none");
+			}
+		});
+
+		$("#paste_form").submit(function(e) {
+			e.preventDefault();
+			//$("#submit_btn").prop("disabled", true);
+
+			if ($("#visibility").val() == 3 && $("#share_with").val() == "") {
+				alert("Select at least one person!");
+			} else {
+				console.log($(this).serialize());
+				$.ajax({
+					type : $(this).attr('method'),
+					url : $(this).attr('action'),
+					data : $(this).serialize(),
+					cache : false,
+					timeout : 800000,
+					success : function(data) {
+
+					},
+					error : function(e) {
+					}
+				});
+			}
+		});
+	</script>
+
 </body>
-
-<script src="./assets/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/js/jquery-3.6.0.min.js"></script>
-<script src="./assets/js/bootstrap-multiselect.min.js"></script>
-<script src="./assets/fontawsome/js/all.min.js"></script>
-
-<script>
-	$("#visibility").change(function() {
-		if ($("#visibility").val() == 3) { // protected
-			$("#share_with_div").removeClass("d-none");
-		} else {
-			$("#share_with_div").removeClass("d-block");
-			$("#share_with_div").addClass("d-none");
-		}
-	});
-
-	$("#paste_form").submit(function(e) {
-		e.preventDefault();
-		//$("#submit_btn").prop("disabled", true);
-
-		if ($("#visibility").val() == 3 && $("#share_with").val() == "") {
-			alert("Select at least one person!");
-		} else {
-			console.log($(this).serialize());
-			$.ajax({
-				type : $(this).attr('method'),
-				url : $(this).attr('action'),
-				data : $(this).serialize(),
-				cache : false,
-				timeout : 800000,
-				success : function(data) {
-
-				},
-				error : function(e) {
-				}
-			});
-		}
-	});
-</script>
-
 </html>

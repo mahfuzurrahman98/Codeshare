@@ -35,14 +35,15 @@ int cur_user = (int) request.getAttribute("cur_user");
 			</div>
 			<div
 				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-3" : "col-lg-2"%> mt-2 mt-sm-0">
-				<label for="language" class="form-label text-success">Language</label> <select
-					class="form-control form-control-sm" id="language" name="language"
-					onchange="changeLanguage()" required>
+				<label for="language" class="form-label text-success">Language</label>
+				<select class="form-control form-control-sm" id="language"
+					name="language" onchange="changeLanguage()" required>
 					<option value="">Select Language</option>
 					<%
 					for (Language lang : languages) {
 					%>
-					<option value="<%=lang.getId()%>">
+					<option value="<%=lang.getId()%>"
+						<%=lang.getId() == 2 ? "selected" : ""%>>
 						<%=lang.getName()%>
 					</option>
 					<%
@@ -53,16 +54,18 @@ int cur_user = (int) request.getAttribute("cur_user");
 			<input type="hidden" name="poster" id="poster" value="<%=cur_user%>" />
 			<div
 				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-4" : "col-lg-3"%> mt-2 mt-sm-0">
-				<label for="poster_name" class="form-label text-success">Poster</label> <input
-					type="text" class="form-control form-control-sm" id="poster_name"
-					name="poster_name" value="<%=cur_user == 0 ? "" : poster_name%>"
-					<%=cur_user > 0 ? "readonly='readonly'" : "required"%> placeholder="Enter your name">
+				<label for="poster_name" class="form-label text-success">Poster</label>
+				<input type="text" class="form-control form-control-sm"
+					id="poster_name" name="poster_name"
+					value="<%=cur_user == 0 ? "" : poster_name%>"
+					<%=cur_user > 0 ? "readonly='readonly'" : "required"%>
+					placeholder="Enter your name">
 			</div>
 			<div
 				class="col-12 col-md-6 <%=cur_user == 0 ? " col-lg-2" : "col-lg-2"%> mt-2 mt-sm-0">
-				<label for="language" class="form-label text-success">Expire</label> <select
-					class="form-control form-control-sm" id="expire" name="expire"
-					required>
+				<label for="language" class="form-label text-success">Expire</label>
+				<select class="form-control form-control-sm" id="expire"
+					name="expire" required>
 					<option value="">Select Expire</option>
 					<option value="1">1 Hour</option>
 					<option value="2">1 Day</option>
@@ -76,8 +79,8 @@ int cur_user = (int) request.getAttribute("cur_user");
 				ArrayList<User> users = (ArrayList<User>) request.getAttribute("share_users");
 			%>
 			<div class="col-12 col-md-6 col-lg-2 mt-2 mt-sm-0">
-				<label for="visibility" class="form-label text-success">Visibility</label> <select
-					class="form-control form-control-sm" id="visibility"
+				<label for="visibility" class="form-label text-success">Visibility</label>
+				<select class="form-control form-control-sm" id="visibility"
 					name="visibility" required>
 					<option value="">Select Visibility</option>
 					<option value="1">Public</option>
@@ -86,9 +89,9 @@ int cur_user = (int) request.getAttribute("cur_user");
 				</select>
 			</div>
 			<div id="share_with_div" class="col-12 d-none mt-2">
-				<label for="share_with" class="form-label text-success">Share With</label> <select
-					class="form-control form-control-sm selectpicker" id="share_with"
-					name="share_with" multiple>
+				<label for="share_with" class="form-label text-success">Share
+					With</label> <select class="form-control form-control-sm selectpicker"
+					id="share_with" name="share_with" multiple>
 					<%
 					for (User user : users) {
 					%>
@@ -104,7 +107,8 @@ int cur_user = (int) request.getAttribute("cur_user");
 			}
 			%>
 			<div class="mt-2">
-				<label for="source" class="form-label text-success">Source Code</label>
+				<label for="source" class="form-label text-success">Source
+					Code</label>
 				<div id="editor" style="height: 75vh; max-height: 100vh;"></div>
 			</div>
 			<div class="col-12 col-md-6 col-lg-3 mt-2">
@@ -114,84 +118,83 @@ int cur_user = (int) request.getAttribute("cur_user");
 	</div>
 	<jsp:include page="./footer.jsp" />
 
-</body>
+	<script src="./assets/js/bootstrap.bundle.min.js"></script>
+	<script src="./assets/js/jquery-3.6.0.min.js"></script>
+	<script src="./assets/js/bootstrap-multiselect.min.js"></script>
+	<script src="./assets/fontawsome/js/all.min.js"></script>
+	<script src="./assets/ace/ace.js"></script>
+	<script src="./assets/ace/ext-language_tools.js"></script>
+	<script src="./assets/js/editor.js"></script>
 
-<script src="./assets/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/js/jquery-3.6.0.min.js"></script>
-<script src="./assets/js/bootstrap-multiselect.min.js"></script>
-<script src="./assets/fontawsome/js/all.min.js"></script>
-<script src="./assets/ace/ace.js"></script>
-<script src="./assets/ace/ext-language_tools.js"></script>
-<script src="./assets/js/editor.js"></script>
+	<script>
+		$("#visibility").change(function() {
+			if ($("#visibility").val() == 3) { // protected
+				$("#share_with_div").removeClass("d-none");
+			} else {
+				$("#share_with_div").removeClass("d-block");
+				$("#share_with_div").addClass("d-none");
+			}
+		});
 
-<script>
-	$("#visibility").change(function() {
-		if ($("#visibility").val() == 3) { // protected
-			$("#share_with_div").removeClass("d-none");
-		} else {
-			$("#share_with_div").removeClass("d-block");
-			$("#share_with_div").addClass("d-none");
-		}
-	});
+		$("#paste_form").submit(function(e) {
+			e.preventDefault();
+			//$("#submit_btn").prop("disabled", true);
 
-	$("#paste_form").submit(function(e) {
-		e.preventDefault();
-		//$("#submit_btn").prop("disabled", true);
+			if ($("#visibility").val() == 3 && $("#share_with").val() == "") {
+				alert("Select at least one person!");
+			} else if (editor.getSession().getValue().trim() == "") {
+				alert("Source code can't be empty")
+			} else {
+				var form_data = $(this).serialize();
+				form_data += "&source=" + editor.getSession().getValue();
+				console.log(form_data);
+				$.ajax({
+					type : $(this).attr('method'),
+					url : $(this).attr('action'),
+					data : form_data,
+					cache : false,
+					timeout : 800000,
+					success : function(data) {
+						$("#paste_form")[0].reset();
+						editor.getSession().setValue("");
+						alert("Source pasted successfully");
+					},
+					error : function(e) {
+					}
+				});
+			}
+		});
 
-		if ($("#visibility").val() == 3 && $("#share_with").val() == "") {
-			alert("Select at least one person!");
-		} else if (editor.getSession().getValue().trim() == "") {
-			alert("Source code can't be empty")
-		} else {
-			var form_data = $(this).serialize();
-			form_data += "&source=" + editor.getSession().getValue();
-			console.log(form_data);
+		$("#login_form").submit(function(e) {
+			e.preventDefault();
+			// $("#submit_btn").prop("disabled", true);
 			$.ajax({
 				type : $(this).attr('method'),
 				url : $(this).attr('action'),
-				data : form_data,
+				data : $(this).serialize(),
 				cache : false,
 				timeout : 800000,
 				success : function(data) {
-					$("#paste_form")[0].reset();
-					editor.getSession().setValue("");
-					alert("Source pasted successfully");
+					$("._modal-footer").removeClass("d-none");
+					let res = JSON.parse(data);
+					if (res.login) {
+						$(".alert_msg").removeClass("alert-danger");
+						$(".alert_msg").addClass("alert-success");
+						$(".alert_msg").text("Login Successful");
+						setTimeout(function() {
+							window.location.reload();
+						}, 1000);
+
+					} else {
+						$(".alert_msg").addClass("alert-danger");
+						$(".alert_msg").text("Invalid Credintials");
+					}
 				},
 				error : function(e) {
 				}
 			});
-		}
-	});
-
-	$("#login_form").submit(function(e) {
-		e.preventDefault();
-		// $("#submit_btn").prop("disabled", true);
-		$.ajax({
-			type : $(this).attr('method'),
-			url : $(this).attr('action'),
-			data : $(this).serialize(),
-			cache : false,
-			timeout : 800000,
-			success : function(data) {
-				$("._modal-footer").removeClass("d-none");
-				let res = JSON.parse(data);
-				if (res.login) {
-					$(".alert_msg").removeClass("alert-danger");
-					$(".alert_msg").addClass("alert-success");
-					$(".alert_msg").text("Login Successful");
-					setTimeout(function() {
-						window.location.reload();
-					}, 1000);
-
-				} else {
-					$(".alert_msg").addClass("alert-danger");
-					$(".alert_msg").text("Invalid Credintials");
-				}
-			},
-			error : function(e) {
-			}
 		});
-	});
-</script>
+	</script>
 
+</body>
 </html>

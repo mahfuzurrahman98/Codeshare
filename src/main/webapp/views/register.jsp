@@ -22,17 +22,19 @@
 			<form class="px-lg-3" action="" method="POST">
 				<div class="form-group text-success h5">
 					<label><b>Full Name</b></label> <input type="text" name="name"
-						class="form-control form-control-sm" pattern="[A-Z a-z]+" title="Only alphabets"
-						placeholder="Enter Your Full Name" required="">
-				</div>
-				<div class="form-group text-success h5">
-					<label><b>Email Address</b></label> <input type="email"
-						name="email" class="form-control form-control-sm" placeholder="Enter Your Email"
+						class="form-control form-control-sm" pattern="[A-Z a-z]+"
+						title="Only alphabets" placeholder="Enter Your Full Name"
 						required="">
 				</div>
 				<div class="form-group text-success h5">
+					<label><b>Email Address</b></label> <input type="email"
+						name="email" class="form-control form-control-sm"
+						placeholder="Enter Your Email" required="">
+				</div>
+				<div class="form-group text-success h5">
 					<label><b>Enter a Username</b></label> <input type="text"
-						name="username" class="form-control form-control-sm" pattern="[A-Za-z_0-9]+"
+						name="username" class="form-control form-control-sm"
+						pattern="[A-Za-z_0-9]+"
 						title="Only alphanumeric and underscore are allowed"
 						placeholder="*Required when login" required="">
 				</div>
@@ -56,11 +58,11 @@
 		</div>
 	</div>
 	<jsp:include page="./footer.jsp" />
+
+	<script src="./assets/js/bootstrap.bundle.min.js"></script>
+	<script src="./assets/js/jquery-3.6.0.min.js"></script>
+	<script src="./assets/js/bootstrap-multiselect.min.js"></script>
+	<script src="./assets/fontawsome/js/all.min.js"></script>
+
 </body>
-
-<script src="./assets/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/js/jquery-3.6.0.min.js"></script>
-<script src="./assets/js/bootstrap-multiselect.min.js"></script>
-<script src="./assets/fontawsome/js/all.min.js"></script>
-
 </html>
